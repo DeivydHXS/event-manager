@@ -1,0 +1,13 @@
+# Dependências
+/node_modules
+
+# Arquivos de Log e Temporários
+npm-debug.log
+yarn-error.log
+
+# Arquivos de Ambiente (NUNCA ENVIE PARA O GIT)
+.env
+
+# Banco de dados local
+*.sqlite
+swagger-output.json

@@ -1,0 +1,15 @@
+# Ficheiros e pastas do Git e do Node
+.git
+.gitignore
+node_modules
+
+# Ficheiros de ambiente e de base de dados local
+.env
+*.sqlite
+test.sqlite
+
+# Ficheiros de log e de configuração de ferramentas
+npm-debug.log
+Dockerfile
+.dockerignore
+README.md
