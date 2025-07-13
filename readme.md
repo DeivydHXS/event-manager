@@ -1,109 +1,88 @@
-API de Gerenciamento de Eventos
+# API de Gerenciamento de Eventos
+
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+![Node.js Version](https://img.shields.io/badge/node-v18.x-green.svg)
+![Framework](https://img.shields.io/badge/framework-Express.js-lightgrey.svg)
+![Testes](https://img.shields.io/badge/tests-passing-success.svg)
+
 Uma API RESTful completa construída com Node.js, Express e Sequelize para o gerenciamento de eventos. Este projeto foi desenvolvido como um estudo aprofundado sobre a criação de APIs robustas, seguras e escaláveis, seguindo as melhores práticas de desenvolvimento de software.
 
-📖 Índice
-Principais Funcionalidades
+---
 
-Tecnologias Utilizadas
+### 📖 Índice
 
-Pré-requisitos
+* [Principais Funcionalidades](#-principais-funcionalidades)
+* [Tecnologias Utilizadas](#️-tecnologias-utilizadas)
+* [Pré-requisitos](#-pré-requisitos)
+* [Como Rodar o Projeto](#-como-rodar-o-projeto)
+* [Scripts Disponíveis](#-scripts-disponíveis)
+* [Testes](#-testes)
+* [Documentação da API (Swagger)](#-documentação-da-api-swagger)
+* [Docker](#-docker)
+* [Variáveis de Ambiente](#-variáveis-de-ambiente)
+* [Licença](#-licença)
 
-Como Rodar o Projeto
+---
 
-Scripts Disponíveis
+### ✨ Principais Funcionalidades
 
-Testes
+* **Gerenciamento de Usuários:** Cadastro e autenticação segura com senhas criptografadas e tokens JWT.
+* **CRUD de Eventos:** Criação, leitura, atualização e exclusão de eventos, com associação ao usuário criador.
+* **Sistema de Participação:** Usuários autenticados podem se inscrever e cancelar a inscrição em eventos.
+* **Controle de Acesso Baseado em Funções (RBAC):**
+    * **Administrador:** Possui acesso total para gerenciar todos os eventos e funcionalidades do sistema.
+    * **Dono do Evento:** Tem permissões para editar e excluir apenas os eventos que criou.
+    * **Participante:** Pode visualizar eventos e participar deles, mas não pode realizar alterações nos eventos.
+    * Implementado com um middleware de autorização centralizado e regras de negócio específicas.
+* **Listagem Avançada:** A rota de listagem de eventos suporta:
+    * **Paginação** (`page` e `limit`)
+    * **Filtros** (por localização e por tempo - futuros/passados)
+    * **Ordenação** (por qualquer campo, ascendente ou descendente)
+* **Segurança:**
+    * Autenticação por Token JWT.
+    * Middlewares de segurança com `helmet`.
+    * Prevenção de ataques de força bruta com `express-rate-limit`.
+    * Suporte a CORS para integração segura com front-ends.
+* **Qualidade de Código:**
+    * Código padronizado com **ESLint** e **Prettier**.
+    * Tratamento de erros centralizado.
+    * Validação de dados de entrada com **Yup**.
+* **Testes Automatizados:** Suíte de testes de integração completa com **Jest** e **Supertest**.
+* **Documentação:** Documentação interativa da API gerada com **Swagger**.
+* **Containerização:** Suporte completo a **Docker** para um ambiente de desenvolvimento e produção padronizado.
 
-Documentação da API (Swagger)
+---
 
-Docker
+### 🛠️ Tecnologias Utilizadas
 
-Variáveis de Ambiente
+* **Backend:** Node.js, Express.js
+* **Banco de Dados:** Sequelize (ORM), SQLite3
+* **Testes:** Jest, Supertest, factory-girl
+* **Autenticação:** JWT, bcryptjs
+* **Segurança:** Helmet, Express Rate Limit, CORS
+* **Validação:** Yup
+* **Qualidade de Código:** ESLint, Prettier
+* **Documentação:** Swagger (swagger-ui-express, swagger-autogen)
+* **Containerização:** Docker
 
-Licença
+---
 
-✨ Principais Funcionalidades
-Gerenciamento de Usuários: Cadastro e autenticação segura com senhas criptografadas e tokens JWT.
+### 📋 Pré-requisitos
 
-CRUD de Eventos: Criação, leitura, atualização e exclusão de eventos, com associação ao usuário criador.
-
-Sistema de Participação: Usuários autenticados podem se inscrever e cancelar a inscrição em eventos.
-
-Controle de Acesso Baseado em Funções (RBAC):
-
-Administrador: Possui acesso total para gerenciar todos os eventos e funcionalidades do sistema.
-
-Dono do Evento: Tem permissões para editar e excluir apenas os eventos que criou.
-
-Participante: Pode visualizar eventos e participar deles, mas não pode realizar alterações nos eventos.
-
-Implementado com um middleware de autorização centralizado e regras de negócio específicas.
-
-Listagem Avançada: A rota de listagem de eventos suporta:
-
-Paginação (page e limit)
-
-Filtros (por localização e por tempo - futuros/passados)
-
-Ordenação (por qualquer campo, ascendente ou descendente)
-
-Segurança:
-
-Autenticação por Token JWT.
-
-Middlewares de segurança com helmet.
-
-Prevenção de ataques de força bruta com express-rate-limit.
-
-Suporte a CORS para integração segura com front-ends.
-
-Qualidade de Código:
-
-Código padronizado com ESLint e Prettier.
-
-Tratamento de erros centralizado.
-
-Validação de dados de entrada com Yup.
-
-Testes Automatizados: Suíte de testes de integração completa com Jest e Supertest.
-
-Documentação: Documentação interativa da API gerada com Swagger.
-
-Containerização: Suporte completo a Docker para um ambiente de desenvolvimento e produção padronizado.
-
-🛠️ Tecnologias Utilizadas
-Backend: Node.js, Express.js
-
-Banco de Dados: Sequelize (ORM), SQLite3
-
-Testes: Jest, Supertest, factory-girl
-
-Autenticação: JWT, bcryptjs
-
-Segurança: Helmet, Express Rate Limit, CORS
-
-Validação: Yup
-
-Qualidade de Código: ESLint, Prettier
-
-Documentação: Swagger (swagger-ui-express, swagger-autogen)
-
-Containerização: Docker
-
-📋 Pré-requisitos
 Antes de começar, você vai precisar ter instalado em sua máquina:
+* [Node.js](https://nodejs.org/en/) (v18.x ou superior)
+* [npm](https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/)
+* [Docker](https://www.docker.com/products/docker-desktop/) (para rodar via container)
 
-Node.js (v18.x ou superior)
+---
 
-npm ou Yarn
+### 🚀 Como Rodar o Projeto
 
-Docker (para rodar via container)
-
-🚀 Como Rodar o Projeto
 Siga os passos abaixo para executar o projeto em seu ambiente de desenvolvimento.
 
+```bash
 # 1. Clone este repositório
-$ git clone https://github.com/seu-usuario/event-api.git
+$ git clone [https://github.com/seu-usuario/event-api.git](https://github.com/seu-usuario/event-api.git)
 
 # 2. Navegue até o diretório do projeto
 $ cd event-api
@@ -127,58 +106,46 @@ $ npm run db:seed
 $ npm run dev
 
 # O servidor estará a correr em http://localhost:3333
+```
 
-📜 Scripts Disponíveis
-No package.json, você encontrará os seguintes scripts:
+---
 
-Script
+### 📜 Scripts Disponíveis
 
-Descrição
+No `package.json`, você encontrará os seguintes scripts:
 
-npm run dev
+| Script                 | Descrição                                                                      |
+| ---------------------- | -------------------------------------------------------------------------------- |
+| `npm run dev`          | Inicia a aplicação em modo de desenvolvimento com `nodemon`.                       |
+| `npm test`             | Executa a suíte de testes de integração com Jest.                                |
+| `npm run lint`         | Analisa o código em busca de erros de padrão com ESLint.                           |
+| `npm run lint:fix`     | Tenta corrigir automaticamente os erros encontrados pelo ESLint.                 |
+| `npm run swagger`      | Gera (ou atualiza) o ficheiro `swagger-output.json` com base nas rotas.          |
+| `npm run db:migrate`   | Executa as migrations do Sequelize para criar/atualizar as tabelas do banco.   |
+| `npm run db:seed`      | Popula o banco de dados com dados de teste (seeders).                            |
+| `npm run db:seed:undo` | Remove todos os dados inseridos pelos seeders.                                   |
 
-Inicia a aplicação em modo de desenvolvimento com nodemon.
+---
 
-npm test
+### ✅ Testes
 
-Executa a suíte de testes de integração com Jest.
-
-npm run lint
-
-Analisa o código em busca de erros de padrão com ESLint.
-
-npm run lint:fix
-
-Tenta corrigir automaticamente os erros encontrados pelo ESLint.
-
-npm run swagger
-
-Gera (ou atualiza) o ficheiro swagger-output.json com base nas rotas.
-
-npm run db:migrate
-
-Executa as migrations do Sequelize para criar/atualizar as tabelas do banco.
-
-npm run db:seed
-
-Popula o banco de dados com dados de teste (seeders).
-
-npm run db:seed:undo
-
-Remove todos os dados inseridos pelos seeders.
-
-✅ Testes
 Para garantir a qualidade e o funcionamento correto da API, foram criados testes de integração. Para executá-los:
 
+```bash
 # 1. Certifique-se de que as migrations foram executadas no banco de teste
 $ cross-env NODE_ENV=test npm run db:migrate
 
 # 2. Rode a suíte de testes
 $ npm test
+```
 
-📚 Documentação da API (Swagger)
+---
+
+### 📚 Documentação da API (Swagger)
+
 A documentação completa e interativa dos endpoints está disponível via Swagger UI.
 
+```bash
 # 1. Gere o ficheiro de documentação
 $ npm run swagger
 
@@ -187,12 +154,16 @@ $ npm run dev
 
 # 3. Abra o seu navegador e acesse:
 http://localhost:3333/docs
+```
+**Obs:** É necessário regenerar a documentação (`npm run swagger`) sempre que novas rotas forem adicionadas ou modificadas.
 
-Obs: É necessário regenerar a documentação (npm run swagger) sempre que novas rotas forem adicionadas ou modificadas.
+---
 
-🐳 Docker
+### 🐳 Docker
+
 Este projeto está totalmente containerizado. Para construir e rodar a aplicação com Docker:
 
+```bash
 # 1. Construa a imagem Docker a partir do Dockerfile
 # (Certifique-se de que o serviço Docker está a correr na sua máquina)
 $ docker build -t event-api .
@@ -205,41 +176,24 @@ $ docker stop api-container
 
 # Para remover o contentor:
 $ docker rm api-container
+```
 
-🔑 Variáveis de Ambiente
-Para correr esta aplicação, você precisa de criar um ficheiro .env na raiz do projeto. Use o .env.example como referência.
+---
 
-Variável
+### 🔑 Variáveis de Ambiente
 
-Descrição
+Para correr esta aplicação, você precisa de criar um ficheiro `.env` na raiz do projeto. Use o `.env.example` como referência.
 
-Exemplo
+| Variável       | Descrição                                                                 | Exemplo                                                |
+| -------------- | ------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `APP_PORT`     | A porta em que o servidor da API irá correr.                              | `3333`                                                 |
+| `APP_SECRET`   | Um segredo forte e único para a geração de tokens JWT.                    | `segredo-muito-seguro-para-minha-api`                  |
+| `DB_STORAGE`   | O caminho para o ficheiro da base de dados SQLite de desenvolvimento.     | `./src/database/database.sqlite`                       |
+| `FRONTEND_URL` | A URL do seu front-end, para a configuração do CORS em produção.          | `http://localhost:3000`                                |
 
-APP_PORT
+---
 
-A porta em que o servidor da API irá correr.
+### 📄 Licença
 
-3333
+Este projeto está sob a licença MIT. Veja o ficheiro `LICENSE.md` para mais detalhes.
 
-APP_SECRET
-
-Um segredo forte e único para a geração de tokens JWT.
-
-segredo-muito-seguro-para-minha-api
-
-DB_STORAGE
-
-O caminho para o ficheiro da base de dados SQLite de desenvolvimento.
-
-./src/database/database.sqlite
-
-FRONTEND_URL
-
-A URL do seu front-end, para a configuração do CORS em produção.
-
-http://localhost:3000
-
-📄 Licença
-Este projeto está sob a licença MIT. Veja o ficheiro LICENSE.md para mais detalhes.
-
-Feito com ❤️ por [Seu Nome Aqui]
