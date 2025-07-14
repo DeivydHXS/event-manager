@@ -9,6 +9,8 @@ const Yup = require('yup');
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('../swagger-output.json');
 
+const AppError = require('./app/errors/AppError');
+
 const routes = require('./routes');
 require('./database');
 
@@ -51,6 +53,12 @@ class App {
 
   exceptionHandler() {
     this.server.use((err, req, res, next) => {
+      if (err instanceof AppError) {
+        return res.status(err.statusCode).json({
+          error: err.message,
+        });
+      }
+
       if (err instanceof Yup.ValidationError) {
         return res.status(400).json({
           error: 'Validation failed',

@@ -7,8 +7,6 @@ class User extends Model {
       {
         name: DataTypes.STRING,
         email: DataTypes.STRING,
-        // O password não é uma coluna no banco, é um campo virtual
-        // que usamos para receber a senha e gerar o hash.
         password: {
           type: DataTypes.VIRTUAL,
           set(value) {
@@ -26,15 +24,16 @@ class User extends Model {
     return this;
   }
 
-  // Método para verificar se a senha está correta
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }
 
   static associate(models) {
-    // Um usuário é dono (criador) de muitos eventos
-    this.hasMany(models.Event, { foreignKey: 'user_id', as: 'created_events' });
-    // Um usuário pode participar de muitos eventos, através da tabela 'attendances'
+    this.hasMany(models.Event, {
+      foreignKey: 'user_id',
+      as: 'created_events',
+    });
+
     this.belongsToMany(models.Event, {
       foreignKey: 'user_id',
       through: 'attendances',
