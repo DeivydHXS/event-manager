@@ -7,6 +7,7 @@ const UserController = require('./app/controllers/UserController');
 const SessionController = require('./app/controllers/SessionController');
 const EventController = require('./app/controllers/EventController');
 const AttendanceController = require('./app/controllers/AttendanceController');
+const ProfileController = require('./app/controllers/ProfileController');
 
 const routes = new Router();
 
@@ -54,5 +55,8 @@ routes.post('/events/:id/attendance', AttendanceController.store);
 // #swagger.tags = ['Events'] #swagger.summary = 'Adiciona participação a um evento (requer autenticação).'
 routes.delete('/events/:id/attendance', AttendanceController.delete);
 // #swagger.tags = ['Events'] #swagger.summary = 'Deleta participação de um evento (requer autenticação).'
+
+routes.get('/profile', ProfileController.show);
+routes.put('/profile', ProfileController.update);
 
 module.exports = routes;

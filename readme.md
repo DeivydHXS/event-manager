@@ -84,7 +84,7 @@ Siga os passos abaixo para executar o projeto em seu ambiente de desenvolvimento
 
 ```bash
 # 1. Clone este repositório
-$ git clone [https://github.com/seu-usuario/event-api.git](https://github.com/seu-usuario/event-api.git)
+$ git clone https://github.com/deivydhxs/event-api.git
 
 # 2. Navegue até o diretório do projeto
 $ cd event-api

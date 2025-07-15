@@ -10,6 +10,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('../swagger-output.json');
 
 const AppError = require('./app/errors/AppError');
+const uploadConfig = require('./config/upload');
 
 const routes = require('./routes');
 require('./database');
@@ -32,23 +33,25 @@ class App {
 
     this.server.use(cors(corsOptions));
     this.server.use(express.json());
+    this.server.use('/files', express.static(uploadConfig.directory));
     const apiLimiter = rateLimit({
-      windowMs: 15 * 60 * 1000, // 15 minutos
-      max: 100, // Limita cada IP a 100 requisições por janela de 15 minutos
+      windowMs: 15 * 60 * 1000,
+      max: 100,
       message:
         'Too many requests from this IP, please try again after 15 minutes',
-      standardHeaders: true, // Retorna informações do limite nos cabeçalhos `RateLimit-*`
-      legacyHeaders: false, // Desativa os cabeçalhos antigos `X-RateLimit-*`
+      standardHeaders: true,
+      legacyHeaders: false,
     });
     this.server.use(apiLimiter);
   }
 
-  routes() {
-    this.server.use(routes);
-  }
-
   swagger() {
     this.server.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+  }
+
+  routes() {
+    this.swagger();
+    this.server.use(routes);
   }
 
   exceptionHandler() {

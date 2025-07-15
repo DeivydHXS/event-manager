@@ -10,16 +10,16 @@ const doc = {
   host: 'localhost:3333',
   schemes: ['http'],
   // Configuração para o botão 'Authorize' funcionar com nosso token JWT
-  securityDefinitions: {
-    Bearer: {
-      type: 'apiKey',
-      name: 'Authorization',
-      in: 'header',
-      description:
-        "Enter 'Bearer' followed by a space and then your JWT token.",
-    },
-  },
-  security: [{ Bearer: [] }],
+  // securityDefinitions: {
+  //   Bearer: {
+  //     type: 'apiKey',
+  //     name: 'Authorization',
+  //     in: 'header',
+  //     description:
+  //       "Enter 'Bearer' followed by a space and then your JWT token.",
+  //   },
+  // },
+  // security: [{ Bearer: [] }],
 };
 
 const outputFile = './swagger-output.json';
