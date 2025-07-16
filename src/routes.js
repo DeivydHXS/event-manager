@@ -1,15 +1,17 @@
 const { Router } = require('express');
+const multer = require('multer');
 const rateLimit = require('express-rate-limit');
 const authMiddleware = require('./app/middlewares/auth');
 const { canManageEvent } = require('./app/middlewares/authorization');
-
 const UserController = require('./app/controllers/UserController');
 const SessionController = require('./app/controllers/SessionController');
 const EventController = require('./app/controllers/EventController');
 const AttendanceController = require('./app/controllers/AttendanceController');
 const ProfileController = require('./app/controllers/ProfileController');
+const uploadConfig = require('./config/upload');
 
 const routes = new Router();
+const upload = multer(uploadConfig);
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
@@ -50,6 +52,12 @@ routes.put('/events/:id', canManageEvent, EventController.update);
 // #swagger.tags = ['Events'] #swagger.summary = 'Edita um evento (requer autenticação).'
 routes.delete('/events/:id', canManageEvent, EventController.delete);
 // #swagger.tags = ['Events'] #swagger.summary = 'Deleta um evento (requer autenticação).'
+
+routes.patch(
+  '/events/:id/image',
+  upload.single('image'), // 'image' é o nome do campo no formulário que conterá o ficheiro
+  EventController.updateImage
+);
 
 routes.post('/events/:id/attendance', AttendanceController.store);
 // #swagger.tags = ['Events'] #swagger.summary = 'Adiciona participação a um evento (requer autenticação).'

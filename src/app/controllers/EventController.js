@@ -48,6 +48,20 @@ class EventController {
     return res.json(event);
   }
 
+  /**
+   * Lida com a requisição de upload de imagem para um evento.
+   */
+  async updateImage(req, res) {
+    const updatedEvent = await EventService.updateImage(
+      req.params.id,
+      req.file.filename,
+      req.userId,
+      req.isAdmin
+    );
+
+    return res.json(updatedEvent);
+  }
+
   async delete(req, res) {
     await EventService.delete(req.params.id, req.userId, req.isAdmin);
     return res.status(204).send();
