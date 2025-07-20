@@ -33,6 +33,11 @@ class Event extends Model {
       through: 'attendances',
       as: 'attendees',
     });
+    this.belongsToMany(models.Category, {
+      foreignKey: 'event_id',
+      through: 'event_categories',
+      as: 'categories',
+    });
   }
 }
 

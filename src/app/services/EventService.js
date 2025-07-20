@@ -1,10 +1,16 @@
 const { Op } = require('sequelize');
+const fs = require('fs').promises;
+
 const Event = require('../models/Event');
 const User = require('../models/User');
+const Category = require('../models/Category');
+
 const AppError = require('../errors/AppError');
-const fs = require('fs').promises;
 const uploadConfig = require('../../config/upload');
 
+/**
+ * Lida com toda a lógica de negócio relacionada a eventos.
+ */
 class EventService {
   async getById(eventId) {
     const event = await Event.findByPk(eventId, {
@@ -17,6 +23,12 @@ class EventService {
         {
           model: User,
           as: 'attendees',
+          attributes: ['id', 'name'],
+          through: { attributes: [] },
+        },
+        {
+          model: Category,
+          as: 'categories',
           attributes: ['id', 'name'],
           through: { attributes: [] },
         },
@@ -38,6 +50,7 @@ class EventService {
       order = 'ASC',
       location,
       time = 'future',
+      categoryId,
     } = query;
 
     const where = {};
@@ -52,14 +65,27 @@ class EventService {
 
     const offset = (page - 1) * limit;
 
+    const include = [
+      { model: User, as: 'creator', attributes: ['id', 'name', 'email'] },
+      {
+        model: Category,
+        as: 'categories',
+        attributes: ['id', 'name'],
+        through: { attributes: [] },
+      },
+    ];
+
+    if (categoryId) {
+      include[1].where = { id: categoryId };
+    }
+
     const { count, rows } = await Event.findAndCountAll({
       where,
       limit,
       offset,
       order: [[sortBy, order.toUpperCase()]],
-      include: [
-        { model: User, as: 'creator', attributes: ['id', 'name', 'email'] },
-      ],
+      include,
+      distinct: true,
     });
 
     return {
@@ -74,7 +100,38 @@ class EventService {
   }
 
   async create(eventData, userId) {
-    const event = await Event.create({ ...eventData, user_id: userId });
+    const { categoryIds, ...restOfEventData } = eventData;
+
+    const event = await Event.create({ ...restOfEventData, user_id: userId });
+
+    if (categoryIds && categoryIds.length > 0) {
+      await event.setCategories(categoryIds);
+    }
+
+    return event;
+  }
+
+  async update(eventId, updateData, userId, isAdmin) {
+    const { categoryIds, ...restOfUpdateData } = updateData;
+    const event = await Event.findByPk(eventId);
+
+    if (!event) {
+      throw new AppError('Event not found.', 404);
+    }
+
+    if (event.user_id !== userId && !isAdmin) {
+      throw new AppError(
+        'Forbidden: You do not have permission to perform this action.',
+        403
+      );
+    }
+
+    await event.update(restOfUpdateData);
+
+    if (categoryIds) {
+      await event.setCategories(categoryIds);
+    }
+
     return event;
   }
 

@@ -3,11 +3,15 @@ const multer = require('multer');
 const rateLimit = require('express-rate-limit');
 const authMiddleware = require('./app/middlewares/auth');
 const { canManageEvent } = require('./app/middlewares/authorization');
+const isAdmin = require('./app/middlewares/isAdmin');
+
 const UserController = require('./app/controllers/UserController');
 const SessionController = require('./app/controllers/SessionController');
 const EventController = require('./app/controllers/EventController');
 const AttendanceController = require('./app/controllers/AttendanceController');
 const ProfileController = require('./app/controllers/ProfileController');
+const CategoryController = require('./app/controllers/CategoryController');
+
 const uploadConfig = require('./config/upload');
 
 const routes = new Router();
@@ -44,6 +48,8 @@ routes.get('/events', EventController.index);
 routes.get('/events/:id', EventController.show);
 // #swagger.tags = ['Events'] #swagger.summary = 'Busca um evento específico pelo ID.'
 
+routes.get('/categories', CategoryController.index);
+
 routes.use(authMiddleware);
 
 routes.post('/events', EventController.store);
@@ -66,5 +72,9 @@ routes.delete('/events/:id/attendance', AttendanceController.delete);
 
 routes.get('/profile', ProfileController.show);
 routes.put('/profile', ProfileController.update);
+
+routes.post('/categories', isAdmin, CategoryController.store);
+routes.put('/categories/:id', isAdmin, CategoryController.update);
+routes.delete('/categories/:id', isAdmin, CategoryController.delete);
 
 module.exports = routes;

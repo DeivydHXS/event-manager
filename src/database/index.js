@@ -1,10 +1,10 @@
-// src/database/index.js
 const Sequelize = require('sequelize');
 const databaseConfig = require('../config/database');
 const User = require('../app/models/User');
 const Event = require('../app/models/Event');
+const Category = require('../app/models/Category');
 
-const models = [User, Event];
+const models = [User, Event, Category];
 const env = process.env.NODE_ENV || 'development';
 const config = databaseConfig[env];
 

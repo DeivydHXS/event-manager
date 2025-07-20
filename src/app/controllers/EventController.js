@@ -19,6 +19,7 @@ class EventController {
       description: Yup.string().required(),
       date: Yup.date().required(),
       location: Yup.string().required(),
+      categoryIds: Yup.array().of(Yup.number()),
     });
     await schema.validate(req.body, { abortEarly: false });
 
@@ -32,6 +33,7 @@ class EventController {
       description: Yup.string(),
       date: Yup.date(),
       location: Yup.string(),
+      categoryIds: Yup.array().of(Yup.number()),
     });
     await schema.validate(req.body, { abortEarly: false });
 
