@@ -27,9 +27,7 @@ class Event extends Model {
   }
 
   static associate(models) {
-    // Um evento pertence a um usuário (criador)
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'creator' });
-    // Um evento tem muitos usuários (participantes), através da tabela 'attendances'
     this.belongsToMany(models.User, {
       foreignKey: 'event_id',
       through: 'attendances',

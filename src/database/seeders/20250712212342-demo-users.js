@@ -17,7 +17,6 @@ module.exports = {
       updated_at: new Date(),
     });
 
-    // Gerar 15 usuários falsos
     for (let i = 0; i < 15; i++) {
       users.push({
         name: faker.person.fullName(),
@@ -28,7 +27,6 @@ module.exports = {
       });
     }
 
-    // Inserir todos os usuários no banco de dados de uma só vez
     await queryInterface.bulkInsert('users', users, {});
   },
 

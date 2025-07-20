@@ -4,11 +4,6 @@ const User = require('../models/User');
 const AppError = require('../errors/AppError');
 
 class ProfileService {
-  /**
-   * Busca os dados do perfil do usuário logado.
-   * @param {number} userId - O ID do usuário autenticado.
-   * @returns {Promise<object>} - Os dados públicos do usuário.
-   */
   async get(userId) {
     const user = await User.findByPk(userId, {
       attributes: ['id', 'name', 'email', 'is_admin'],
@@ -21,12 +16,6 @@ class ProfileService {
     return user;
   }
 
-  /**
-   * Atualiza os dados do perfil do usuário logado.
-   * @param {number} userId - O ID do usuário autenticado.
-   * @param {object} data - Os dados a serem atualizados (name, email, oldPassword, password).
-   * @returns {Promise<object>} - Os dados públicos atualizados do usuário.
-   */
   async update(userId, data) {
     const { email, oldPassword, password } = data;
 

@@ -15,10 +15,9 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true, // Garante que não teremos dois usuários com o mesmo email
+        unique: true,
       },
       password_hash: {
-        // Nunca armazenamos a senha, apenas o hash
         type: Sequelize.STRING,
         allowNull: false,
       },

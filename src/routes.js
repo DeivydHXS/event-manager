@@ -23,7 +23,7 @@ const authLimiter = rateLimit({
 routes.get('/', (req, res) =>
   // #swagger.tags = ['Healthcheck']
   // #swagger.summary = 'Verifica se a API está no ar.'
-  res.json({ message: 'Welcome to Event API!' })
+  res.json({ message: 'Welcome to Event Manager API!' })
 );
 
 routes.post('/users', authLimiter, UserController.store);
@@ -47,22 +47,22 @@ routes.get('/events/:id', EventController.show);
 routes.use(authMiddleware);
 
 routes.post('/events', EventController.store);
-// #swagger.tags = ['Events'] #swagger.summary = 'Cria um novo evento (requer autenticação).'
+// #swagger.tags = ['Events'] #swagger.summary = 'Cria um novo evento.'
 routes.put('/events/:id', canManageEvent, EventController.update);
-// #swagger.tags = ['Events'] #swagger.summary = 'Edita um evento (requer autenticação).'
+// #swagger.tags = ['Events'] #swagger.summary = 'Edita um evento.'
 routes.delete('/events/:id', canManageEvent, EventController.delete);
-// #swagger.tags = ['Events'] #swagger.summary = 'Deleta um evento (requer autenticação).'
+// #swagger.tags = ['Events'] #swagger.summary = 'Deleta um evento.'
 
 routes.patch(
   '/events/:id/image',
-  upload.single('image'), // 'image' é o nome do campo no formulário que conterá o ficheiro
+  upload.single('image'),
   EventController.updateImage
 );
 
 routes.post('/events/:id/attendance', AttendanceController.store);
-// #swagger.tags = ['Events'] #swagger.summary = 'Adiciona participação a um evento (requer autenticação).'
+// #swagger.tags = ['Events'] #swagger.summary = 'Adiciona participação a um evento.'
 routes.delete('/events/:id/attendance', AttendanceController.delete);
-// #swagger.tags = ['Events'] #swagger.summary = 'Deleta participação de um evento (requer autenticação).'
+// #swagger.tags = ['Events'] #swagger.summary = 'Deleta participação de um evento.'
 
 routes.get('/profile', ProfileController.show);
 routes.put('/profile', ProfileController.update);

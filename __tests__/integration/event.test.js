@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../../src/app');
 const truncate = require('../utils/truncate');
-const factory = require('../factories'); // Vamos criar este arquivo a seguir
+const factory = require('../factories');
 
 describe('Events', () => {
   beforeEach(async () => {
@@ -39,6 +39,6 @@ describe('Events', () => {
       location: 'Nowhere',
     });
 
-    expect(response.status).toBe(401); // Esperamos um erro de Unauthorized
+    expect(response.status).toBe(401);
   });
 });

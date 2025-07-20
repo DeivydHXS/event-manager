@@ -1,19 +1,18 @@
+require('./database');
 require('dotenv').config();
 
-const express = require('express');
 const cors = require('cors');
+const express = require('express');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const Yup = require('yup');
-
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('../swagger-output.json');
+const Yup = require('yup');
 
 const AppError = require('./app/errors/AppError');
 const uploadConfig = require('./config/upload');
 
 const routes = require('./routes');
-require('./database');
 
 class App {
   constructor() {

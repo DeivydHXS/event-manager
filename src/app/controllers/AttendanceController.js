@@ -1,5 +1,3 @@
-// src/app/controllers/AttendanceController.js
-
 const AttendanceService = require('../services/AttendanceService');
 
 class AttendanceController {

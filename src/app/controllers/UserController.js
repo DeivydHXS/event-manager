@@ -1,5 +1,3 @@
-// src/app/controllers/UserController.js
-
 const Yup = require('yup');
 const UserService = require('../services/UserService');
 

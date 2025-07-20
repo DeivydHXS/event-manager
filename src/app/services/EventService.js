@@ -6,30 +6,23 @@ const fs = require('fs').promises;
 const uploadConfig = require('../../config/upload');
 
 class EventService {
-  /**
-   * Busca um único evento pelo seu ID, incluindo o criador e os participantes.
-   * @param {number} eventId - O ID do evento.
-   * @returns {Promise<Event>} - O objeto do evento.
-   */
   async getById(eventId) {
     const event = await Event.findByPk(eventId, {
-      // Incluímos os dados relacionados para uma resposta mais completa
       include: [
         {
           model: User,
-          as: 'creator', // Alias definido na associação do modelo
-          attributes: ['id', 'name', 'email'], // Apenas os campos seguros
+          as: 'creator',
+          attributes: ['id', 'name', 'email'],
         },
         {
           model: User,
-          as: 'attendees', // Alias definido na associação do modelo
+          as: 'attendees',
           attributes: ['id', 'name'],
-          through: { attributes: [] }, // Oculta os dados da tabela de junção
+          through: { attributes: [] },
         },
       ],
     });
 
-    // Se o evento não for encontrado, lançamos um erro que será capturado pelo nosso exceptionHandler.
     if (!event) {
       throw new AppError('Event not found.', 404);
     }
@@ -37,11 +30,6 @@ class EventService {
     return event;
   }
 
-  /**
-   * Lista todos os eventos com base em filtros, paginação e ordenação.
-   * @param {object} query - Os query parameters da requisição (page, limit, etc.).
-   * @returns {Promise<object>} - Um objeto com os eventos e metadados de paginação.
-   */
   async getAll(query) {
     const {
       page = 1,
@@ -85,25 +73,11 @@ class EventService {
     };
   }
 
-  /**
-   * Cria um novo evento.
-   * @param {object} eventData - Os dados do evento a ser criado.
-   * @param {number} userId - O ID do usuário que está a criar o evento.
-   * @returns {Promise<Event>} - O evento recém-criado.
-   */
   async create(eventData, userId) {
     const event = await Event.create({ ...eventData, user_id: userId });
     return event;
   }
 
-  /**
-   * Atualiza a imagem de um evento.
-   * @param {number} eventId - O ID do evento.
-   * @param {string} imageFilename - O nome do novo ficheiro da imagem.
-   * @param {number} userId - O ID do usuário que está a realizar a ação.
-   * @param {boolean} isAdmin - Se o usuário é um administrador.
-   * @returns {Promise<Event>} - O evento atualizado.
-   */
   async updateImage(eventId, imageFilename, userId, isAdmin) {
     const event = await Event.findByPk(eventId);
 
@@ -134,12 +108,6 @@ class EventService {
     return event;
   }
 
-  /**
-   * Exclui um evento.
-   * @param {number} eventId - O ID do evento a ser excluído.
-   * @param {number} userId - O ID do usuário que está a realizar a ação.
-   * @param {boolean} isAdmin - Se o usuário é um administrador.
-   */
   async delete(eventId, userId, isAdmin) {
     const event = await Event.findByPk(eventId);
 

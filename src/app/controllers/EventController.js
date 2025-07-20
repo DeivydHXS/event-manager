@@ -7,9 +7,6 @@ class EventController {
     return res.json(result);
   }
 
-  /**
-   * Lida com a requisição para buscar um único evento.
-   */
   async show(req, res) {
     const { id } = req.params;
     const event = await EventService.getById(id);
@@ -17,7 +14,6 @@ class EventController {
   }
 
   async store(req, res) {
-    // A validação de entrada continua a ser responsabilidade do controller.
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       description: Yup.string().required(),
@@ -48,9 +44,6 @@ class EventController {
     return res.json(event);
   }
 
-  /**
-   * Lida com a requisição de upload de imagem para um evento.
-   */
   async updateImage(req, res) {
     const updatedEvent = await EventService.updateImage(
       req.params.id,

@@ -5,10 +5,7 @@ const User = require('../app/models/User');
 const Event = require('../app/models/Event');
 
 const models = [User, Event];
-
-// 1. Determina o ambiente atual (development por padrão)
 const env = process.env.NODE_ENV || 'development';
-// 2. Seleciona a configuração correta do ficheiro database.js
 const config = databaseConfig[env];
 
 class Database {
@@ -17,7 +14,6 @@ class Database {
   }
 
   init() {
-    // 3. Usa a configuração específica do ambiente para criar a conexão
     this.connection = new Sequelize(config);
 
     models

@@ -19,11 +19,8 @@ class User extends Model {
       {
         sequelize,
         hooks: {
-          // O hook 'beforeSave' é executado automaticamente antes de um 'create' ou 'update'
           beforeSave: async (user) => {
-            // Se uma nova senha em texto plano foi atribuída ao objeto do usuário...
             if (user.password) {
-              // ...então geramos o hash e o atribuímos à coluna 'password_hash'.
               user.password_hash = await bcrypt.hash(user.password, 8);
             }
           },

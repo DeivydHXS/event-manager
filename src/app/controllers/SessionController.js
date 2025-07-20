@@ -1,5 +1,3 @@
-// src/app/controllers/SessionController.js
-
 const Yup = require('yup');
 const SessionService = require('../services/SessionService');
 
