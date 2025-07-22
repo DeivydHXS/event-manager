@@ -27,7 +27,8 @@ class App {
     this.server.use(helmet());
 
     const corsOptions = {
-      origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+      // origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+      origin: '*',
     };
 
     this.server.use(cors(corsOptions));

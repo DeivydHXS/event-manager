@@ -65,9 +65,9 @@ routes.patch(
   EventController.updateImage
 );
 
-routes.post('/events/:id/attendance', AttendanceController.store);
+routes.post('/events/:id/attend', AttendanceController.store);
 // #swagger.tags = ['Events'] #swagger.summary = 'Adiciona participação a um evento.'
-routes.delete('/events/:id/attendance', AttendanceController.delete);
+routes.delete('/events/:id/unattend', AttendanceController.delete);
 // #swagger.tags = ['Events'] #swagger.summary = 'Deleta participação de um evento.'
 
 routes.get('/profile', ProfileController.show);

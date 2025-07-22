@@ -2,7 +2,7 @@ const AttendanceService = require('../services/AttendanceService');
 
 class AttendanceController {
   async store(req, res) {
-    await AttendanceService.create(req.params.eventId, req.userId, req.isAdmin);
+    await AttendanceService.create(req.params.id, req.userId, req.isAdmin);
     return res
       .status(201)
       .json({ message: 'Successfully subscribed to the event.' });
